@@ -153,6 +153,11 @@ namespace RVP
         [System.NonSerialized]
         public bool jammed;
 
+        // Configura a posição da suspensão no veículo
+        public Positions PositionInVehicle = default;
+
+        public enum Positions { Other, Front, Rear }
+
         void Start() {
             tr = transform;
             rb = tr.GetTopmostParentComponent<Rigidbody>();

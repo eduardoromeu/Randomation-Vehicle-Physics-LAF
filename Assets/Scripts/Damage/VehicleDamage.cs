@@ -63,6 +63,9 @@ namespace RVP
 
         ContactPoint nullContact = new ContactPoint();
 
+        // Add para uso na oficina
+        private float _totalDamage = 0;
+
         void Start() {
             tr = transform;
             rb = GetComponent<Rigidbody>();
@@ -214,6 +217,8 @@ namespace RVP
             float distClamp;
             DetachablePart detachedPart;
             Suspension damagedSus;
+
+            _totalDamage += clampedColMag;
 
             // Get mass factor for multiplying damage
             if (useContactPoint) {
@@ -417,6 +422,9 @@ namespace RVP
         }
 
         public void Repair() {
+
+            _totalDamage = 0;
+
             // Fix damaged parts
             for (int i = 0; i < damageParts.Length; i++) {
                 if (damageParts[i].GetComponent<Motor>()) {
@@ -503,6 +511,11 @@ namespace RVP
             foreach (HoverWheel curHoverWheel in vp.hoverWheels) {
                 curHoverWheel.Reattach();
             }
+        }
+
+        public float GetTotalDamage()
+        {
+            return _totalDamage;
         }
 
         // Draw collisionIgnoreHeight gizmos
